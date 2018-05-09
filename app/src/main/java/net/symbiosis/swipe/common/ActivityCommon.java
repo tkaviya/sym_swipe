@@ -87,11 +87,11 @@ public class ActivityCommon {
             if (imei == null || imei.equals("")) {
                 imei = Secure.getString(activity.getContentResolver(), Secure.ANDROID_ID);
             }
-            return imei == null ? "" : imei;
+            return imei;
         }
         catch (Exception ex) {
             ex.printStackTrace();
-            return "";
+            return null;
         }
     }
 
