@@ -1,0 +1,189 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	tools:context=".AddCashoutActivity">
+
+	<include
+		android:id="@+id/tool_bar"
+		layout="@layout/tool_bar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" />
+
+	<ScrollView
+		android:id="@+id/bank_details_form"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:fillViewport="false">
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:orientation="vertical"
+			android:padding="@dimen/activity_horizontal_margin">
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center_horizontal"
+				android:layout_marginLeft="15dp"
+				android:layout_marginRight="15dp"
+				android:src="@drawable/sym_logo" />
+
+			<LinearLayout
+				android:id="@+id/cashoutInfo"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:gravity="center">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:backgroundTint="@color/colorAccent"
+					android:gravity="center_horizontal"
+					android:padding="10dp"
+					android:text="@string/info_cashout"
+					android:textAlignment="center"
+					android:textColor="#254117"
+					android:textSize="15dip"
+					android:textStyle="bold" />
+
+			</LinearLayout>
+
+			<!--  Cashout Details -->
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:gravity="center_horizontal"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:gravity="center_horizontal"
+					android:paddingBottom="15dp"
+					android:text="@string/label_cashout_details"
+					android:textSize="@dimen/title_heading_size"
+					android:textStyle="bold" />
+
+				<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent"
+					android:gravity="left|center_vertical"
+					android:orientation="horizontal">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginEnd="5dp"
+						android:layout_marginRight="5dp"
+						android:text="@string/label_account_type"
+						android:textSize="16dp" />
+
+					<Spinner
+						android:id="@+id/spnChooseBank"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="5dp" />
+
+				</LinearLayout>
+
+				<!--  Account Nickname TextField -->
+				<EditText
+					android:id="@+id/edtAccountNickname"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/hint_account_nickname"
+					android:inputType="text"
+					android:maxLength="20"
+					android:textSize="16sp" />
+
+				<!--  Account Phone TextField -->
+				<EditText
+					android:id="@+id/edtAccountPhone"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/prompt_phone"
+					android:inputType="phone"
+					android:maxLength="12"
+					android:textSize="16sp" />
+
+				<!--  Account Email TextField -->
+				<EditText
+					android:id="@+id/edtAccountEmail"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/prompt_email"
+					android:inputType="textEmailAddress"
+					android:maxLength="50"
+					android:textSize="16sp" />
+
+			</LinearLayout>
+
+			<!--  Bank Account Details -->
+			<LinearLayout
+				android:id="@+id/layoutBankAccount"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:orientation="vertical"
+				android:visibility="gone">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:gravity="center_horizontal"
+					android:paddingBottom="5dp"
+					android:text="Bank Account Details"
+					android:textSize="16dip"
+					android:textStyle="bold" />
+
+				<!--  Bank Account Number Label -->
+				<EditText
+					android:id="@+id/edtBankAccountName"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/prompt_account_name"
+					android:maxLength="50"
+					android:textSize="16sp" />
+
+				<!--  Bank Account Number TextField -->
+				<EditText
+					android:id="@+id/edtBankAccountNumber"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/prompt_account_number"
+					android:inputType="number"
+					android:maxLength="20"
+					android:textSize="16sp" />
+
+				<!--  Bank Account Number TextField -->
+				<EditText
+					android:id="@+id/edtBankBranch"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/prompt_account_branch"
+					android:inputType="number"
+					android:maxLength="20"
+					android:textSize="16sp" />
+
+			</LinearLayout>
+
+			<!--  Add Button -->
+			<Button
+				android:id="@+id/btnAddCashoutAccount"
+				style="@style/Widget.AppCompat.Button.Colored"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:backgroundTint="@color/colorPrimaryDark"
+				android:text="@string/action_add_cashout_option"
+				android:textAllCaps="false"
+				android:textStyle="bold" />
+
+
+		</LinearLayout>
+	</ScrollView>
+
+</LinearLayout>
+

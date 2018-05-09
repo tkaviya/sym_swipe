@@ -1,0 +1,104 @@
+<resources>
+	<string name="app_name">Symbiosis Swipe</string>
+
+	<string name="action_profile">Profile</string>
+	<string name="action_exit">Exit</string>
+
+	<string-array name="cashout_type">
+		<item>No Cashout Option</item>
+		<item>Local Bank Account</item>
+		<item>EcoCash</item>
+		<item>Telecash</item>
+		<item>OneMoney</item>
+	</string-array>
+	<string-array name="currency_type">
+		<item>USD</item>
+		<item>ZAR</item>
+		<item>GBP</item>
+		<item>BWP</item>
+	</string-array>
+	<string-array name="bank_name">
+		<item>Agricultural Development Bank of Zimbabwe (Agribank)</item>
+		<item>BancABC Zimbabwe</item>
+		<item>Barclays Bank of Zimbabwe</item>
+		<item>CABS</item>
+		<item>CBZ Bank Limited</item>
+		<item>Ecobank Zimbabwe</item>
+		<item>FBC Bank Limited</item>
+		<item>MBCA Bank Limited</item>
+		<item>Metbank</item>
+		<item>NMB Bank Limited</item>
+		<item>People\'s Own Savings Bank (POSB)</item>
+		<item>Stanbic Bank Zimbabwe Limited</item>
+		<item>Standard Chartered Zimbabwe</item>
+		<item>Steward Bank</item>
+		<item>ZB Bank Limited</item>
+	</string-array>
+
+	<string name="prompt_username">Username</string>
+	<string name="prompt_fname">Firstname</string>
+	<string name="prompt_lname">Lastname</string>
+	<string name="prompt_cname">Company Name</string>
+	<string name="prompt_email">Email</string>
+	<string name="prompt_phone">Phone Number</string>
+	<string name="prompt_sym_pin">Symbiosis Pin</string>
+	<string name="prompt_pin">Pin</string>
+	<string name="prompt_new_pin">New Pin</string>
+	<string name="prompt_rpin">Repeat Pin</string>
+	<string name="prompt_password">Account Password</string>
+
+	<string name="action_register">Register</string>
+	<string name="action_login">Login</string>
+	<string name="action_login_short">Login</string>
+	<string name="action_complete_transaction">Complete Transaction</string>
+	<string name="action_cancel">Cancel</string>
+	<string name="action_start_swipe">Process Payment</string>
+	<string name="action_cashout">Cashout</string>
+	<string name="action_add_cashout_option">Add Cashout Option</string>
+
+	<string name="error_invalid_username">This username is not valid</string>
+	<string name="error_invalid_nick_name">This nickname is not valid</string>
+	<string name="error_invalid_name">This name is not valid</string>
+	<string name="error_invalid_email">This email address is not valid</string>
+	<string name="error_invalid_msisdn">This phone number is not valid</string>
+	<string name="error_invalid_pin">This pin is not valid</string>
+	<string name="error_invalid_password">This pin is not valid</string>
+	<string name="error_invalid_amount">The requested amount is not valid</string>
+	<string name="error_incorrect_password">This password is incorrect</string>
+	<string name="error_field_required">This field is required</string>
+	<string name="error_pin_must_match">Pin and Pin Confirmation must match</string>
+
+	<string name="title_swipe">Receive Payment</string>
+	<string name="title_pin_details">Complete Transaction</string>
+	<string name="title_register_details">Registration Details</string>
+	<string name="title_reregister_details">Register Existing User</string>
+	<string name="title_cashout_details">Cashout Details</string>
+	<string name="title_cashout">Cashout</string>
+
+
+	<string name="info_cashout">If you would like to withdraw funds received through this app, add a cashout option below.</string>
+	<string name="info_reregister">An existing account exists with those details. Authenticate to register as the user below.</string>
+	<string name="processing_info">Processing transaction for:</string>
+	<string name="label_enter_pin">Enter pin to complete transaction</string>
+
+	<string name="label_currency_for_transaction">Transaction Currency</string>
+	<string name="label_transaction_details">Transaction Details</string>
+	<string name="label_cashout_options">Cashout Options</string>
+	<string name="label_wallet">Wallet</string>
+	<string name="label_transaction_summary">Transaction Summary</string>
+	<string name="label_no_reference">[No Reference Specified]</string>
+
+	<string name="prompt_transaction_amount">Enter Amount</string>
+	<string name="prompt_transaction_reference">Transaction Reference (Optional)</string>
+	<string name="prompt_cashout_reference">Cashout Reference (Optional)</string>
+    <string name="prompt_enter_amount">Enter Amount to Pay</string>
+	<string name="label_cashout_details">Cashout Details</string>
+	<string name="label_account_type">Account Type</string>
+    <string name="prompt_add_cashout_option">click + button to add cashout options</string>
+
+	<string name="hint_account_nickname">Account Nickname</string>
+	<string name="prompt_account_name">Account Name</string>
+	<string name="prompt_account_number">Bank Account Number</string>
+	<string name="prompt_account_branch">Bank Account Branch</string>
+
+</resources>
