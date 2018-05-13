@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum BTResponseCode implements Serializable
+public enum SymResponseCode implements Serializable
 {
 	/* Response codes below 0 should never be shown to user, should show general error instead */
 	SUCCESS						(0,		"Successful"),
@@ -67,16 +67,16 @@ public enum BTResponseCode implements Serializable
 	public final Integer code;
 	public String message;
 
-	BTResponseCode(int code, String message) { this.code = code; this.message = message; }
+	SymResponseCode(int code, String message) { this.code = code; this.message = message; }
 
-	BTResponseCode(BTResponseCode responseCode, String message) { this.code = responseCode.code; this.message = message; }
+	SymResponseCode(SymResponseCode responseCode, String message) { this.code = responseCode.code; this.message = message; }
 
-	static Map<Integer, BTResponseCode> enumMap;
+	static Map<Integer, SymResponseCode> enumMap;
 
-	public static BTResponseCode valueOf(Integer value) {
+	public static SymResponseCode valueOf(Integer value) {
 		if(enumMap == null) {
 			enumMap = new HashMap<>();
-			for(BTResponseCode rc : BTResponseCode.values()) { enumMap.put(rc.code, rc); }
+			for(SymResponseCode rc : SymResponseCode.values()) { enumMap.put(rc.code, rc); }
 		}
 		return enumMap.get(value);
 	}
@@ -85,5 +85,5 @@ public enum BTResponseCode implements Serializable
 
 	public String getMessage() { return message; }
 
-	public BTResponseCode setMessage(String message) { this.message = message; return this; }
+	public SymResponseCode setMessage(String message) { this.message = message; return this; }
 }

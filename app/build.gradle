@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
 	compileSdkVersion 25
-	buildToolsVersion '27.0.1'
+	buildToolsVersion '27.0.3'
 
 	defaultConfig {
-		applicationId "net.beyondtelecom.gopay"
+		applicationId "net.symbiosis.swipe"
 		minSdkVersion 16
 		targetSdkVersion 25
 		versionCode 1

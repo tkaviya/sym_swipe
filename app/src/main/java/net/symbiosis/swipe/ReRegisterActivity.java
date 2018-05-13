@@ -129,15 +129,15 @@ public class ReRegisterActivity extends AppCompatActivity {
 //			runOnUiThread(new Runnable() {
 //				public void run() {
 //
-//					BTResponseCode registerResponse;
+//					SymResponseCode registerResponse;
 //					try {
 //						registerResponse = registerTask.execute().get();
 //					} catch (InterruptedException e) {
 //						e.printStackTrace();
-//						registerResponse = BTResponseCode.GENERAL_ERROR.setMessage("Registration interrupted");
+//						registerResponse = SymResponseCode.GENERAL_ERROR.setMessage("Registration interrupted");
 //					} catch (ExecutionException e) {
 //						e.printStackTrace();
-//						registerResponse = BTResponseCode.GENERAL_ERROR.setMessage("Registration failed: " + e.getMessage());
+//						registerResponse = SymResponseCode.GENERAL_ERROR.setMessage("Registration failed: " + e.getMessage());
 //					}
 //
 //					final String responseMsg = registerResponse.getMessage();
@@ -153,8 +153,8 @@ public class ReRegisterActivity extends AppCompatActivity {
 //							txtRegEmail.getText().toString(),
 //							txtRegPin.getText().toString()
 //						);
-//						GPPersistence goPayDB = LoginActivity.getLoginActivity().getGoPayDB();
-//						goPayDB.setUserDetails(newUserDetails);
+//						SymPersistence symDB = LoginActivity.getLoginActivity().getSymDB();
+//						symDB.setUserDetails(newUserDetails);
 //						finish();
 //						Intent bankIntent = new Intent(getLoginActivity(), AddCashoutActivity.class);
 //						startActivity(bankIntent);

@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.symbiosis.swipe.common.ActivityCommon;
-import net.symbiosis.swipe.common.BTResponseCode;
+import net.symbiosis.swipe.common.SymResponseCode;
 import net.symbiosis.swipe.dto.UserDetails;
 
 import java.util.Hashtable;
@@ -22,7 +22,7 @@ import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
 import static net.symbiosis.swipe.common.ActivityCommon.getDeviceIMEI;
 import static net.symbiosis.swipe.common.ActivityCommon.registerUser;
-import static net.symbiosis.swipe.common.BTResponseCode.SUCCESS;
+import static net.symbiosis.swipe.common.SymResponseCode.SUCCESS;
 import static net.symbiosis.swipe.common.Validator.isValidEmail;
 import static net.symbiosis.swipe.common.Validator.isValidMsisdn;
 import static net.symbiosis.swipe.common.Validator.isValidName;
@@ -201,7 +201,7 @@ public class RegisterActivity extends AppCompatActivity {
 			registerParams.put("pin", txtRegPin.getText().toString());
 
 			progressBar.setVisibility(View.VISIBLE);
-			final BTResponseCode registerResponse = registerUser(this, registerParams);
+			final SymResponseCode registerResponse = registerUser(this, registerParams);
 			progressBar.setVisibility(View.GONE);
 
 
@@ -256,18 +256,18 @@ public class RegisterActivity extends AppCompatActivity {
 //		runOnUiThread(new Runnable() {
 //			public void run() {
 //
-//				BTResponseObject searchResponse;
+//				SymResponseObject searchResponse;
 //				try {
 //					searchResponse = searchTask.execute().get();
 //				} catch (InterruptedException e) {
 //					e.printStackTrace();
-//					searchResponse = new BTResponseObject(
-//						BTResponseCode.GENERAL_ERROR.setMessage("Registration interrupted")
+//					searchResponse = new SymResponseObject(
+//						SymResponseCode.GENERAL_ERROR.setMessage("Registration interrupted")
 //					);
 //				} catch (ExecutionException e) {
 //					e.printStackTrace();
-//					searchResponse = new BTResponseObject(
-//						BTResponseCode.GENERAL_ERROR.setMessage("Registration failed: " + e.getMessage())
+//					searchResponse = new SymResponseObject(
+//						SymResponseCode.GENERAL_ERROR.setMessage("Registration failed: " + e.getMessage())
 //					);
 //				}
 //

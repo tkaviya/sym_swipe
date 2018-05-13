@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
-import net.symbiosis.swipe.common.BTResponseCode;
+import net.symbiosis.swipe.common.SymResponseCode;
 import net.symbiosis.swipe.dto.CashoutAccount;
 import net.symbiosis.swipe.dto.FinancialInstitution;
 import net.symbiosis.swipe.dto.InstitutionType;
@@ -206,10 +206,10 @@ public class AddCashoutActivity extends AppCompatActivity {
 					break;
 			}
 
-			final BTResponseCode addResponse = addCashoutAccount(cashoutActivity, cashoutAccount);
+			final SymResponseCode addResponse = addCashoutAccount(cashoutActivity, cashoutAccount);
 			progressBar.setVisibility(View.GONE);
 
-			if (addResponse.equals(BTResponseCode.SUCCESS)) {
+			if (addResponse.equals(SymResponseCode.SUCCESS)) {
 				runOnUiThread(new Runnable() {
 					public void run() {
 					makeText(cashoutActivity, "Cashout Option Added Successfully", LENGTH_LONG).show();

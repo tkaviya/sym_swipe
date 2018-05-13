@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import net.symbiosis.swipe.common.BTResponseObject;
+import net.symbiosis.swipe.common.SymResponseObject;
 
 import java.util.Hashtable;
 
@@ -19,8 +19,8 @@ import static net.symbiosis.swipe.TabCharge.getTransactionDetails;
 import static net.symbiosis.swipe.common.ActivityCommon.getDeviceIMEI;
 import static net.symbiosis.swipe.common.ActivityCommon.getUserDetails;
 import static net.symbiosis.swipe.common.ActivityCommon.swipeTransaction;
-import static net.symbiosis.swipe.common.BTResponseCode.SUCCESS;
 import static net.symbiosis.swipe.common.CommonUtilities.formatDoubleToMoney;
+import static net.symbiosis.swipe.common.SymResponseCode.SUCCESS;
 import static net.symbiosis.swipe.common.Validator.isNullOrEmpty;
 import static net.symbiosis.swipe.common.Validator.isValidCardPin;
 
@@ -95,7 +95,7 @@ public class PinActivity extends AppCompatActivity {
 			swipeDetails.put("cardNumber", "1234567890987");
 			swipeDetails.put("cardPin", edtCardPin.getText().toString());
 
-			BTResponseObject<Double> swipeResponse = swipeTransaction(pinActivity, swipeDetails);
+			SymResponseObject<Double> swipeResponse = swipeTransaction(pinActivity, swipeDetails);
 
 			if (swipeResponse.getResponseCode().equals(SUCCESS)) {
 				new AlertDialog.Builder(pinActivity)

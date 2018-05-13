@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import net.symbiosis.swipe.common.ActivityCommon;
-import net.symbiosis.swipe.common.BTResponseCode;
+import net.symbiosis.swipe.common.SymResponseCode;
 import net.symbiosis.swipe.dto.UserDetails;
 
 import java.util.Hashtable;
@@ -23,7 +23,7 @@ import static android.widget.Toast.makeText;
 import static net.symbiosis.swipe.common.ActivityCommon.getDeviceIMEI;
 import static net.symbiosis.swipe.common.ActivityCommon.getUserDetails;
 import static net.symbiosis.swipe.common.ActivityCommon.updateProfile;
-import static net.symbiosis.swipe.common.BTResponseCode.SUCCESS;
+import static net.symbiosis.swipe.common.SymResponseCode.SUCCESS;
 import static net.symbiosis.swipe.common.Validator.isValidEmail;
 import static net.symbiosis.swipe.common.Validator.isValidMsisdn;
 import static net.symbiosis.swipe.common.Validator.isValidName;
@@ -202,7 +202,7 @@ public class ProfileActivity extends AppCompatActivity {
 			updateDetails.put("pin", txtProfilePin.getText().toString());
 
 			progressBar.setVisibility(View.VISIBLE);
-			BTResponseCode updateResponse = updateProfile(this, updateDetails);
+			SymResponseCode updateResponse = updateProfile(this, updateDetails);
 			progressBar.setVisibility(View.GONE);
 
 			if (updateResponse.equals(SUCCESS)) {

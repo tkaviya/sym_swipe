@@ -11,13 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import net.symbiosis.swipe.common.BTResponseObject;
+import net.symbiosis.swipe.common.SymResponseObject;
 
 import static java.lang.String.format;
 import static net.symbiosis.swipe.MainActivity.getMainActivity;
 import static net.symbiosis.swipe.common.ActivityCommon.getWalletBalance;
-import static net.symbiosis.swipe.common.BTResponseCode.SUCCESS;
 import static net.symbiosis.swipe.common.CommonUtilities.formatDoubleToMoney;
+import static net.symbiosis.swipe.common.SymResponseCode.SUCCESS;
 import static net.symbiosis.swipe.common.Validator.isNullOrEmpty;
 
 public class TabWallet extends Fragment {
@@ -58,7 +58,7 @@ public class TabWallet extends Fragment {
         if (refresh || isNullOrEmpty(txvCurrentBalance.getText().toString())) {
 
             progressBar.setVisibility(View.VISIBLE);
-            BTResponseObject<Double> walletResponse = getWalletBalance(getMainActivity());
+            SymResponseObject<Double> walletResponse = getWalletBalance(getMainActivity());
             progressBar.setVisibility(View.GONE);
 
             if (walletResponse.getResponseCode().equals(SUCCESS)) {

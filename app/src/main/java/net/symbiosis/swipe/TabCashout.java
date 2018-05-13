@@ -24,7 +24,7 @@ import static java.lang.String.format;
 import static net.symbiosis.swipe.MainActivity.getMainActivity;
 import static net.symbiosis.swipe.common.ActivityCommon.getCashoutAccounts;
 import static net.symbiosis.swipe.common.ActivityCommon.removeCashoutAccount;
-import static net.symbiosis.swipe.common.BTResponseCode.SUCCESS;
+import static net.symbiosis.swipe.common.SymResponseCode.SUCCESS;
 
 public class TabCashout extends Fragment {
 

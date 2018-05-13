@@ -14,7 +14,7 @@ import net.symbiosis.swipe.dto.CurrencyType;
 import net.symbiosis.swipe.dto.FinancialInstitution;
 import net.symbiosis.swipe.dto.InstitutionType;
 import net.symbiosis.swipe.dto.UserDetails;
-import net.symbiosis.swipe.persistence.GPPersistence;
+import net.symbiosis.swipe.persistence.SymPersistence;
 import net.symbiosis.swipe.server.HTTPBackgroundTask;
 import net.symbiosis.swipe.server.HTTPBackgroundTask.TASK_TYPE;
 
@@ -27,8 +27,8 @@ import java.util.Hashtable;
 import static android.widget.Toast.LENGTH_LONG;
 import static android.widget.Toast.makeText;
 import static java.lang.String.format;
-import static net.symbiosis.swipe.common.BTResponseCode.GENERAL_ERROR;
-import static net.symbiosis.swipe.common.BTResponseCode.SUCCESS;
+import static net.symbiosis.swipe.common.SymResponseCode.GENERAL_ERROR;
+import static net.symbiosis.swipe.common.SymResponseCode.SUCCESS;
 import static net.symbiosis.swipe.common.Validator.isNullOrEmpty;
 import static net.symbiosis.swipe.server.HTTPBackgroundTask.CASHOUT_URL;
 import static net.symbiosis.swipe.server.HTTPBackgroundTask.CURRENCY_URL;
@@ -50,7 +50,7 @@ import static net.symbiosis.swipe.server.HTTPBackgroundTask.WALLET_URL;
  ***************************************************************************/
 public class ActivityCommon {
 
-    private static final String BASE_TAG = "GoPay_";
+    private static final String BASE_TAG = "Sym_";
     private static final String TAG = getTag(ActivityCommon.class);
 
     private static UserDetails userDetails;
@@ -58,13 +58,13 @@ public class ActivityCommon {
     private static Hashtable<Integer, FinancialInstitution> financialInstitutions;
     private static ArrayList<CurrencyType> currencyTypes;
     private static ArrayList<CashoutAccount> cashoutAccounts;
-    private static GPPersistence goPayDB = null;
+    private static SymPersistence symDB = null;
 
-    public static GPPersistence getGoPayDB(final Activity activity) {
-        if (goPayDB == null) {
-            goPayDB = new GPPersistence(activity.getApplicationContext());
+    public static SymPersistence getSymDB(final Activity activity) {
+        if (symDB == null) {
+            symDB = new SymPersistence(activity.getApplicationContext());
         }
-        return goPayDB;
+        return symDB;
     }
 
     public static String getTag(Class _class) {
@@ -116,9 +116,9 @@ public class ActivityCommon {
     }
 
     public static UserDetails getUserDetails(final Activity activity) {
-		if (userDetails == null && getGoPayDB(activity) != null) {
+		if (userDetails == null && getSymDB(activity) != null) {
             Log.i(TAG, "Checking for existing registered user");
-            userDetails = getGoPayDB(activity).getUserDetails();
+            userDetails = getSymDB(activity).getUserDetails();
             if (userDetails != null) {
                 Log.i(TAG, "Found existing registered user " + userDetails.getUsername());
             }
@@ -130,43 +130,43 @@ public class ActivityCommon {
 
     public static void clearUserDetailsCache() { userDetails = null; }
 
-    private static BTResponseObject<String> executeBackgroundTask(
+    private static SymResponseObject<String> executeBackgroundTask(
             final Activity activity, final String taskDescription,
             TASK_TYPE taskType, String url, Hashtable<String, String> params) {
 
         final HTTPBackgroundTask backgroundTask = new HTTPBackgroundTask(activity, taskType, url, params);
 
-        final BTResponseObject<String>[] btResponseObject = new BTResponseObject[1];
+        final SymResponseObject<String>[] symResponseObject = new SymResponseObject[1];
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
 
                 try {
-                    btResponseObject[0] = backgroundTask.execute().get();
+                    symResponseObject[0] = backgroundTask.execute().get();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    btResponseObject[0] = new BTResponseObject<>(GENERAL_ERROR.setMessage(taskDescription + " failed: " + e.getMessage()));
+                    symResponseObject[0] = new SymResponseObject<>(GENERAL_ERROR.setMessage(taskDescription + " failed: " + e.getMessage()));
                     return;
                 }
 
-                Log.i(TAG, taskDescription + " response: " + btResponseObject[0].getResponseObject());
+                Log.i(TAG, taskDescription + " response: " + symResponseObject[0].getResponseObject());
 
-                if (!btResponseObject[0].getResponseCode().equals(SUCCESS)) {
+                if (!symResponseObject[0].getResponseCode().equals(SUCCESS)) {
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
-                            makeText(activity, btResponseObject[0].getMessage(), LENGTH_LONG).show();
+                            makeText(activity, symResponseObject[0].getMessage(), LENGTH_LONG).show();
                         }
                     });
                 }
             }
         });
-        return btResponseObject[0];
+        return symResponseObject[0];
     }
 
     public static Hashtable<Integer, FinancialInstitution> getFinancialInstitutions(final Activity activity)
     {
         if (financialInstitutions == null) {
-            BTResponseObject<String> responseObject = executeBackgroundTask(
+            SymResponseObject<String> responseObject = executeBackgroundTask(
                 activity, "Populate financial institutions", GET, FINANCIAL_INSTITUTIONS_URL, null
             );
 
@@ -205,7 +205,7 @@ public class ActivityCommon {
     {
         if (currencyTypes == null) {
 
-            BTResponseObject<String> responseObject = executeBackgroundTask(
+            SymResponseObject<String> responseObject = executeBackgroundTask(
                 activity, "Get currencies", GET, CURRENCY_URL, null
             );
 
@@ -241,7 +241,7 @@ public class ActivityCommon {
 
     public static ArrayList<CashoutAccount> getCashoutAccounts(final Activity activity) {
         if (cashoutAccounts == null) {
-            BTResponseObject<String> responseObject = executeBackgroundTask(
+            SymResponseObject<String> responseObject = executeBackgroundTask(
                 activity, "Get cashout accounts", GET,
                 USER_URL + "/" + getUserDetails(activity).getBtUserId() + "/cashoutAccount",
                 null
@@ -282,7 +282,7 @@ public class ActivityCommon {
         return cashoutAccounts;
     }
 
-    public static BTResponseCode addCashoutAccount(final Activity activity, final CashoutAccount cashoutAccount) {
+    public static SymResponseCode addCashoutAccount(final Activity activity, final CashoutAccount cashoutAccount) {
 
         final Hashtable<String, String> addAccountParams = new Hashtable<>();
         addAccountParams.put("userId", String.valueOf(getUserDetails(activity).getBtUserId()));
@@ -306,7 +306,7 @@ public class ActivityCommon {
         if (!isNullOrEmpty(cashoutAccount.getAccountPhone())) { addAccountParams.put("accountPhone", cashoutAccount.getAccountPhone()); }
         if (!isNullOrEmpty(cashoutAccount.getAccountEmail())) { addAccountParams.put("accountEmail", cashoutAccount.getAccountEmail()); }
 
-        final BTResponseObject<String> responseObject = executeBackgroundTask(
+        final SymResponseObject<String> responseObject = executeBackgroundTask(
             activity, "Add cashout account", POST,
             USER_URL + "/" + getUserDetails(activity).getBtUserId() + "/cashoutAccount",
             addAccountParams
@@ -324,9 +324,9 @@ public class ActivityCommon {
         return responseObject.getResponseCode();
     }
 
-    public static BTResponseCode removeCashoutAccount(final Activity activity, final CashoutAccount cashoutAccount) {
+    public static SymResponseCode removeCashoutAccount(final Activity activity, final CashoutAccount cashoutAccount) {
 
-        final BTResponseObject<String> responseObject = executeBackgroundTask(
+        final SymResponseObject<String> responseObject = executeBackgroundTask(
             activity, "Remove cashout account", DELETE,
             USER_URL + "/" + getUserDetails(activity).getBtUserId() + "/cashoutAccount/" + cashoutAccount.getCashoutAccountId(),
             null
@@ -344,9 +344,9 @@ public class ActivityCommon {
         return responseObject.getResponseCode();
     }
 
-    public static BTResponseCode registerUser(final Activity activity, final Hashtable<String, String> registerParams) {
+    public static SymResponseCode registerUser(final Activity activity, final Hashtable<String, String> registerParams) {
 
-        final BTResponseObject<String> responseObject = executeBackgroundTask(
+        final SymResponseObject<String> responseObject = executeBackgroundTask(
             activity, "Register user", POST, HTTPBackgroundTask.USER_URL, registerParams);
 
         if (responseObject.getResponseCode().equals(SUCCESS)) {
@@ -366,7 +366,7 @@ public class ActivityCommon {
                     systemUserData.optString("email", null)
                 );
 
-                getGoPayDB(activity).setUserDetails(newUserDetails);
+                getSymDB(activity).setUserDetails(newUserDetails);
                 Log.i(TAG, format("Saved user %s %s (%s) with id %s",
                         newUserDetails.getFirstName(), newUserDetails.getLastName(),
                         newUserDetails.getUsername(), newUserDetails.getBtUserId()
@@ -384,9 +384,9 @@ public class ActivityCommon {
         return responseObject.getResponseCode();
     }
 
-    public static BTResponseCode loginUser(final Activity activity, final Hashtable<String, String> loginParams) {
+    public static SymResponseCode loginUser(final Activity activity, final Hashtable<String, String> loginParams) {
 
-        final BTResponseObject<String> responseObject = executeBackgroundTask(
+        final SymResponseObject<String> responseObject = executeBackgroundTask(
             activity, "Login user", POST, HTTPBackgroundTask.SESSION_URL, loginParams);
 
         if (responseObject.getResponseCode().equals(SUCCESS)) {
@@ -406,7 +406,7 @@ public class ActivityCommon {
                     systemUserData.optString("email", null)
                 );
 
-                getGoPayDB(activity).setUserDetails(newUserDetails);
+                getSymDB(activity).setUserDetails(newUserDetails);
                 Log.i(TAG, format("Saved user %s %s (%s) with id %s",
                         newUserDetails.getFirstName(), newUserDetails.getLastName(),
                         newUserDetails.getUsername(), newUserDetails.getBtUserId()
@@ -424,9 +424,9 @@ public class ActivityCommon {
         return responseObject.getResponseCode();
     }
 
-    public static BTResponseCode updateProfile(final Activity activity, final Hashtable<String, String> updateDetails) {
+    public static SymResponseCode updateProfile(final Activity activity, final Hashtable<String, String> updateDetails) {
 
-        final BTResponseObject<String> responseObject = executeBackgroundTask(
+        final SymResponseObject<String> responseObject = executeBackgroundTask(
             activity, "Update profile", PUT,
             HTTPBackgroundTask.USER_URL + "/" + getUserDetails(activity).getBtUserId(),
             updateDetails);
@@ -447,7 +447,7 @@ public class ActivityCommon {
                     systemUserData.optString("msisdn", null),
                     systemUserData.optString("email", null)
                 );
-                getGoPayDB(activity).setUserDetails(newUserDetails);
+                getSymDB(activity).setUserDetails(newUserDetails);
                 Log.i(TAG, format("Saved user %s %s (%s) with id %s",
                         newUserDetails.getFirstName(), newUserDetails.getLastName(),
                         newUserDetails.getUsername(), newUserDetails.getBtUserId()
@@ -465,10 +465,10 @@ public class ActivityCommon {
         return responseObject.getResponseCode();
     }
 
-    public static BTResponseObject<Double> getWalletBalance(final Activity activity) {
+    public static SymResponseObject<Double> getWalletBalance(final Activity activity) {
 
         if (walletBalance == null) {
-            final BTResponseObject<String> responseObject = executeBackgroundTask(
+            final SymResponseObject<String> responseObject = executeBackgroundTask(
                     activity, "Get wallet details", GET,
                     WALLET_URL + "/" + getUserDetails(activity).getWalletId(),
                     null
@@ -490,17 +490,17 @@ public class ActivityCommon {
                             makeText(activity, "Failed to get wallet balance: " + ex.getMessage(), LENGTH_LONG).show();
                         }
                     });
-                    return new BTResponseObject<>(GENERAL_ERROR);
+                    return new SymResponseObject<>(GENERAL_ERROR);
                 }
             }
         }
-        return new BTResponseObject<>(SUCCESS, walletBalance);
+        return new SymResponseObject<>(SUCCESS, walletBalance);
     }
 
-    public static BTResponseObject<Double> swipeTransaction(final Activity activity, final Hashtable<String, String> transactionDetails) {
+    public static SymResponseObject<Double> swipeTransaction(final Activity activity, final Hashtable<String, String> transactionDetails) {
 
         clearWalletBalanceCache();
-        final BTResponseObject<String> responseObject = executeBackgroundTask(
+        final SymResponseObject<String> responseObject = executeBackgroundTask(
             activity, "Swipe transaction", POST, SWIPE_URL, transactionDetails
         );
 
@@ -511,7 +511,7 @@ public class ActivityCommon {
                 JSONArray walletData = responseJSON.getJSONArray("walletData");
                 JSONObject wallet = walletData.getJSONObject(0);
                 walletBalance = wallet.getDouble("currentBalance");
-                return new BTResponseObject<>(SUCCESS, walletBalance);
+                return new SymResponseObject<>(SUCCESS, walletBalance);
             } catch (final Exception ex) {
                 walletBalance = null;
                 ex.printStackTrace();
@@ -521,16 +521,16 @@ public class ActivityCommon {
                         makeText(activity, "Failed to refresh wallet balance after swipe transaction: " + ex.getMessage(), LENGTH_LONG).show();
                     }
                 });
-                return new BTResponseObject<>(GENERAL_ERROR);
+                return new SymResponseObject<>(GENERAL_ERROR);
             }
         }
-        return new BTResponseObject<>(responseObject.getResponseCode());
+        return new SymResponseObject<>(responseObject.getResponseCode());
     }
 
-    public static BTResponseObject<Double> cashoutTransaction(final Activity activity, final Hashtable<String, String> cashoutDetails) {
+    public static SymResponseObject<Double> cashoutTransaction(final Activity activity, final Hashtable<String, String> cashoutDetails) {
 
         clearWalletBalanceCache();
-        final BTResponseObject<String> responseObject = executeBackgroundTask(
+        final SymResponseObject<String> responseObject = executeBackgroundTask(
             activity, "Cashout transaction", POST, CASHOUT_URL, cashoutDetails
         );
 
@@ -541,7 +541,7 @@ public class ActivityCommon {
                 JSONArray walletData = responseJSON.getJSONArray("walletData");
                 JSONObject wallet = walletData.getJSONObject(0);
                 walletBalance = wallet.getDouble("currentBalance");
-                return new BTResponseObject<>(SUCCESS, walletBalance);
+                return new SymResponseObject<>(SUCCESS, walletBalance);
             } catch (final Exception ex) {
                 walletBalance = null;
                 ex.printStackTrace();
@@ -551,9 +551,9 @@ public class ActivityCommon {
                         makeText(activity, "Failed to refresh wallet balance after cashout transaction: " + ex.getMessage(), LENGTH_LONG).show();
                     }
                 });
-                return new BTResponseObject<>(GENERAL_ERROR);
+                return new SymResponseObject<>(GENERAL_ERROR);
             }
         }
-        return new BTResponseObject<>(responseObject.getResponseCode());
+        return new SymResponseObject<>(responseObject.getResponseCode());
     }
 }

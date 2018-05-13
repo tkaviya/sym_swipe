@@ -13,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import net.symbiosis.swipe.common.BTResponseObject;
+import net.symbiosis.swipe.common.SymResponseObject;
 import net.symbiosis.swipe.dto.CurrencyType;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import static net.symbiosis.swipe.common.ActivityCommon.cashoutTransaction;
 import static net.symbiosis.swipe.common.ActivityCommon.getCurrencies;
 import static net.symbiosis.swipe.common.ActivityCommon.getDeviceIMEI;
 import static net.symbiosis.swipe.common.ActivityCommon.getUserDetails;
-import static net.symbiosis.swipe.common.BTResponseCode.SUCCESS;
+import static net.symbiosis.swipe.common.SymResponseCode.SUCCESS;
 import static net.symbiosis.swipe.common.Validator.isNullOrEmpty;
 import static net.symbiosis.swipe.common.Validator.isValidCardPin;
 
@@ -134,7 +134,7 @@ public class CashoutActivity extends AppCompatActivity {
             cashoutDetails.put("cashoutAccountId", valueOf(getCashoutAccount().getCashoutAccountId()));
             cashoutDetails.put("pin", edtCashoutPin.getText().toString());
 
-            BTResponseObject<Double> cashoutResponse = cashoutTransaction(cashoutActivity, cashoutDetails);
+            SymResponseObject<Double> cashoutResponse = cashoutTransaction(cashoutActivity, cashoutDetails);
 
             if (cashoutResponse.getResponseCode().equals(SUCCESS)) {
                 new AlertDialog.Builder(cashoutActivity)

@@ -14,8 +14,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import net.symbiosis.swipe.common.ActivityCommon;
-import net.symbiosis.swipe.common.BTResponseCode;
-import net.symbiosis.swipe.common.BTResponseObject;
+import net.symbiosis.swipe.common.SymResponseCode;
+import net.symbiosis.swipe.common.SymResponseObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,17 +29,17 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import static java.lang.String.valueOf;
-import static net.symbiosis.swipe.common.BTResponseCode.CONNECTION_FAILED;
-import static net.symbiosis.swipe.common.BTResponseCode.GENERAL_ERROR;
-import static net.symbiosis.swipe.common.BTResponseCode.SUCCESS;
+import static net.symbiosis.swipe.common.SymResponseCode.CONNECTION_FAILED;
+import static net.symbiosis.swipe.common.SymResponseCode.GENERAL_ERROR;
+import static net.symbiosis.swipe.common.SymResponseCode.SUCCESS;
 import static net.symbiosis.swipe.server.HTTPBackgroundTask.TASK_TYPE.GET;
 import static net.symbiosis.swipe.server.HTTPBackgroundTask.TASK_TYPE.POST;
 
-public class HTTPBackgroundTask extends AsyncTask<Void, Void, BTResponseObject<String>> {
+public class HTTPBackgroundTask extends AsyncTask<Void, Void, SymResponseObject<String>> {
 
     private static final String TAG = ActivityCommon.getTag(HTTPBackgroundTask.class);
-    private static final String SERVER_URL = "http://tsungai-laptop:8080/sym_api-1.0.0/api/";
-    public static final String SESSION_URL = SERVER_URL + "goPay/session";
+    private static final String SERVER_URL = "http://192.168.1.20:8080/sym_api-1.0.0/api/";
+    public static final String SESSION_URL = SERVER_URL + "mobi/session";
     public static final String USER_URL = SERVER_URL + "user";
     public static final String SWIPE_URL = SERVER_URL + "mobi/swipeTransaction";
     public static final String CASHOUT_URL = SERVER_URL + "mobi/cashoutTransaction";
@@ -53,7 +53,7 @@ public class HTTPBackgroundTask extends AsyncTask<Void, Void, BTResponseObject<S
     private final Hashtable<String, String> params;
     private final TASK_TYPE taskType;
     private final String requestURL;
-    private BTResponseCode btResponseCode;
+    private SymResponseCode symResponseCode;
 
     public HTTPBackgroundTask(Activity activity, TASK_TYPE taskType,
                               String requestURL, Hashtable<String, String> params) {
@@ -63,12 +63,12 @@ public class HTTPBackgroundTask extends AsyncTask<Void, Void, BTResponseObject<S
         this.params = params;
     }
 
-    public BTResponseCode getBtResponseCode() { return btResponseCode; }
+    public SymResponseCode getSymResponseCode() { return symResponseCode; }
 
-    private void setBtResponseCode(BTResponseCode btResponseCode) { this.btResponseCode = btResponseCode; }
+    private void setSymResponseCode(SymResponseCode symResponseCode) { this.symResponseCode = symResponseCode; }
 
     @Override
-    protected BTResponseObject<String> doInBackground(Void... params) {
+    protected SymResponseObject<String> doInBackground(Void... params) {
 
         Log.i(TAG, "Performing background " + taskType.name() + " to " + requestURL);
 
@@ -77,7 +77,7 @@ public class HTTPBackgroundTask extends AsyncTask<Void, Void, BTResponseObject<S
         try
         {
             if (responseString == null) {
-                return new BTResponseObject<>(btResponseCode);
+                return new SymResponseObject<>(symResponseCode);
             }
 
             JSONObject responseJSON = new JSONObject(responseString);
@@ -93,24 +93,24 @@ public class HTTPBackgroundTask extends AsyncTask<Void, Void, BTResponseObject<S
             Integer responseCode = btResponse.getInt("response_code");
             final String responseMessage = btResponse.getString("response_message");
 
-            setBtResponseCode(BTResponseCode.valueOf(responseCode).setMessage(responseMessage));
+            setSymResponseCode(SymResponseCode.valueOf(responseCode).setMessage(responseMessage));
 
             if (responseCode == SUCCESS.getCode()) {
                 Log.i(TAG, "Operation Successful: " + responseMessage);
-                return new BTResponseObject<>(btResponseCode, responseString);
+                return new SymResponseObject<>(symResponseCode, responseString);
             } else if (responseCode < 0) {
                 Log.w(TAG, "Operation Failed: " + responseMessage);
-                return new BTResponseObject<>(btResponseCode, responseString);
+                return new SymResponseObject<>(symResponseCode, responseString);
             } else {
                 Log.w(TAG, "Operation Failed: " + responseMessage);
-                return new BTResponseObject<>(btResponseCode, responseString);
+                return new SymResponseObject<>(symResponseCode, responseString);
             }
         }
         catch (JSONException e) {
             e.printStackTrace();
             Log.e(TAG, "Exception occurred processing response: " + e.getMessage());
-            setBtResponseCode(GENERAL_ERROR.setMessage("Failed! Invalid server response received"));
-            return new BTResponseObject<>(btResponseCode);
+            setSymResponseCode(GENERAL_ERROR.setMessage("Failed! Invalid server response received"));
+            return new SymResponseObject<>(symResponseCode);
         }
     }
 
@@ -121,7 +121,7 @@ public class HTTPBackgroundTask extends AsyncTask<Void, Void, BTResponseObject<S
     }
 
     @Override
-    protected void onPostExecute(final BTResponseObject<String> btResponseObject) {
+    protected void onPostExecute(final SymResponseObject<String> symResponseObject) {
 //        progressDialog.hide();
     }
 
@@ -167,7 +167,7 @@ public class HTTPBackgroundTask extends AsyncTask<Void, Void, BTResponseObject<S
         }
         catch (Exception ex) {
             ex.printStackTrace();
-            setBtResponseCode(CONNECTION_FAILED.setMessage("Failed to connect to server"));
+            setSymResponseCode(CONNECTION_FAILED.setMessage("Failed to connect to server"));
             Log.e(TAG, "Exception Occurred opening connection: " + ex.getMessage());
             return null;
         }
@@ -210,7 +210,7 @@ public class HTTPBackgroundTask extends AsyncTask<Void, Void, BTResponseObject<S
         }
         catch (Exception ex) {
             ex.printStackTrace();
-            setBtResponseCode(CONNECTION_FAILED.setMessage("Server communication failed"));
+            setSymResponseCode(CONNECTION_FAILED.setMessage("Server communication failed"));
             Log.e(TAG, "Exception Occurred sendingServerRequest: " + ex.getMessage());
             return null;
         }

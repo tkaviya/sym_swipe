@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import net.symbiosis.swipe.common.BTResponseCode;
+import net.symbiosis.swipe.common.SymResponseCode;
 import net.symbiosis.swipe.common.Validator;
 
 import java.util.Hashtable;
@@ -23,7 +23,7 @@ import static net.symbiosis.swipe.common.ActivityCommon.getDeviceIMEI;
 import static net.symbiosis.swipe.common.ActivityCommon.getTag;
 import static net.symbiosis.swipe.common.ActivityCommon.getUserDetails;
 import static net.symbiosis.swipe.common.ActivityCommon.loginUser;
-import static net.symbiosis.swipe.common.BTResponseCode.SUCCESS;
+import static net.symbiosis.swipe.common.SymResponseCode.SUCCESS;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
 			loginParams.put("pin", edtPin.getText().toString());
 			loginParams.put("deviceId", getDeviceIMEI(this));
 
-			BTResponseCode loginUserResponse = loginUser(this, loginParams);
+			SymResponseCode loginUserResponse = loginUser(this, loginParams);
 			if (loginUserResponse.equals(SUCCESS)) {
 				Intent swipeIntent = new Intent(loginActivity, MainActivity.class);
 				startActivity(swipeIntent);
