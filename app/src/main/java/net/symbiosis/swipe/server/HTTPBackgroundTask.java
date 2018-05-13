@@ -38,7 +38,7 @@ import static net.symbiosis.swipe.server.HTTPBackgroundTask.TASK_TYPE.POST;
 public class HTTPBackgroundTask extends AsyncTask<Void, Void, SymResponseObject<String>> {
 
     private static final String TAG = ActivityCommon.getTag(HTTPBackgroundTask.class);
-    private static final String SERVER_URL = "http://192.168.1.20:8080/sym_api-1.0.0/api/";
+    private static final String SERVER_URL = "http://GHOST:8080/sym_api-1.0.0/api/";
     public static final String SESSION_URL = SERVER_URL + "mobi/session";
     public static final String USER_URL = SERVER_URL + "user";
     public static final String SWIPE_URL = SERVER_URL + "mobi/swipeTransaction";
